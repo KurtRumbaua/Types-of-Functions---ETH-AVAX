@@ -19,30 +19,32 @@ To deploy and interact with this contract, you can use Remix IDE.
 3. **Paste the contract code**: Copy the following code and paste it into the `GoCoin.sol` file.
 
    ```solidity
-   // SPDX-License-Identifier: MIT
-   pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-   import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-   import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-   contract GoCoin is ERC20, Ownable {
-       constructor(string memory name, string memory symbol, uint256 initialSupply, address initialOwner)
-           ERC20(name, symbol)
-           Ownable(initialOwner) // Pass initialOwner to Ownable constructor
-       {
-           _mint(initialOwner, initialSupply);
-       }
+contract GoCoin is ERC20, Ownable {
+    constructor(string memory name, string memory symbol, uint256 initialSupply, address initialOwner)
+        ERC20(name, symbol)
+        Ownable(initialOwner) // Pass initialOwner to Ownable constructor
+    {
+        _mint(initialOwner, initialSupply);
+    }
 
-       function mint(address to, uint256 amount) public onlyOwner {
-           _mint(to, amount);
-       }
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
 
-       function burn(uint256 amount) public {
-           _burn(msg.sender, amount);
-       }
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
+    }
 
-       // Transfer function is inherited from ERC20.sol
-   }
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        return super.transfer(recipient, amount);
+    }
+}
 
 4. **Compile the contract**: Go to the "Solidity Compiler" tab, select the appropriate compiler version (^0.8.0), and click "Compile GoCoin.sol".
 5. **Deploy the contract**: Go to the "Deploy & Run Transactions" tab, select "Injected Web3" or "JavaScript VM" as the environment, and deploy the contract with the required parameters (name, symbol, initial supply, and initial owner address).
