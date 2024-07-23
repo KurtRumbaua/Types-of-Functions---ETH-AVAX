@@ -20,5 +20,7 @@ contract GoCoin is ERC20, Ownable {
         _burn(msg.sender, amount);
     }
 
-    // Transfer function is inherited from ERC20.sol
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        return super.transfer(recipient, amount);
+    }
 }
